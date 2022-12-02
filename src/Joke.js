@@ -41,11 +41,16 @@ function Joke(props) {
       <div className="container">
         <div className="image-div"></div>
         <div className="text-box">
-          {!loading && display} {loading && <p>loading............! </p>}
+          {!loading && display}
+          {!loading && !display && (
+            <p>My mind is not working change category </p>
+          )}{" "}
+          {loading && <p>loading............! </p>}
         </div>
         <div className="buttons-box">
           <div>
             <select
+              className="foo"
               name="cars"
               value={category}
               onChange={(e) => {
