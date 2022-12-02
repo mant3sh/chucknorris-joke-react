@@ -7,7 +7,7 @@ function Joke(props) {
   const [category, setCategory] = useState("");
   const [display, setDisplay] = useState("");
   const [loading, setLoading] = useState(true);
-  const cahngedisplay = async () => {
+  const cahngedisplay = async (url) => {
     setLoading(true);
     await fetch(url)
       .then((res) => res.json())
@@ -17,22 +17,29 @@ function Joke(props) {
       })
       .catch(() => {
         setDisplay("Mother fucker i am sleeping come back latter");
-        cahngedisplay();
+        cahngedisplay(url);
       });
   };
   useEffect(() => {
-    cahngedisplay();
+    cahngedisplay(url);
   }, []);
+  useEffect(() => {
+    if (category != "") {
+      setUrl(`https://api.chucknorris.io/jokes/random?category=${category}`);
+      cahngedisplay(url);
+    }
+  }, [category]);
 
   const changeurl = (cata) => {
     if (cata != "") {
       setCategory(cata);
-      setUrl(`https://api.chucknorris.io/jokes/random?category=${category}`);
-      cahngedisplay();
+      console.log(category);
+
+      console.log(url);
     } else {
-      setCategory(cata);
+      setCategory("");
       setUrl("https://api.chucknorris.io/jokes/random");
-      cahngedisplay();
+      cahngedisplay(url);
     }
   };
 
@@ -69,7 +76,7 @@ function Joke(props) {
           </div>
           <button
             onClick={() => {
-              cahngedisplay();
+              cahngedisplay(url);
             }}
           >
             next
